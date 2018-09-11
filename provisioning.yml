@@ -1,22 +1,24 @@
 ---
 - hosts: all
   tasks:
+
     - name: 'atualizando repos'
       apt:
         update_cache: yes
       become: yes
-    - name: 'Instalando php5'
-      apt:
-        name: php5
-        state: latest
-      become: yes
-    - name: 'Instalando apache2'
+
+    - name: 'Instala dependencias do sistema operacional'
       apt: 
-        name: apache2
+        name: "{{ item }}"
         state: latest
       become: yes
-    - name: 'Instala modphp'
-      apt: 
-        name: libapache2-mod-php5
-        state: latest
-      become: yes
+      with_items:
+        - php5
+        - apache2
+        - libapache2-mod-php5
+        - php5-gd
+        - libssh2-php
+        - php5-mcrypt
+        - mysql-server-5.6
+        - python-mysqldb
+        - php5-mysql
