@@ -93,7 +93,7 @@
         dest: /var/www/
         remote_src: yes
       become: yes
-
+      
     - copy:
        src: '{{ wp_instalation }}/wp-config-sample.php'
        dest: '{{ wp_instalation }}/wp-config.php'
@@ -113,11 +113,10 @@
         - { regex: 'localhost', value: '{{ wp_db_ip }}'}
       become: yes
 
-    - name: 'Configura Apache para servir Wordpress'
-      copy:
-        src: 'files/000-default.conf'
+    - name: 'Configura apache para servir wordpress'
+      template:
+        src: 'templates/000-default.conf.j2'
         dest: '/etc/apache2/sites-available/000-default.conf'
-        backup: yes
       become: yes
       notify:
         - restart apache
